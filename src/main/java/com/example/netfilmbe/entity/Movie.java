@@ -14,26 +14,31 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Movie {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "title") // corrisponde alla colonna "TITLE"
     private String title;
 
-    @Column(length = 1000)
+    @Column(name = "descrizione", length = 1000) // corrisponde alla colonna "DESCRIZIONE"
     private String descrizione;
 
+    @Column(name = "img") // corrisponde alla colonna "IMG"
     private String img;
 
+    @Column(name = "anno") // corrisponde alla colonna "ANNO"
     private int anno;
 
+    @Column(name = "like_count") // corrisponde alla colonna "LIKE_COUNT"
     private int likeCount;
 
-    private String genre;  // Aggiunto campo genre per il genere del film
+    @Column(name = "genre") // corrisponde alla colonna "GENRE"
+    private String genre;
 
     @ElementCollection
     @CollectionTable(name = "movie_comments", joinColumns = @JoinColumn(name = "movie_id"))
     @Column(name = "comment")
     private List<String> commenti;
 }
+

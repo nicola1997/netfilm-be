@@ -1,16 +1,19 @@
 package com.example.netfilmbe.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class MovieDTO {
 
     private Long id;
-    private String title;
+    private int anno;
+    private String descrizione;
     private String genre;
-
-    public MovieDTO(Long id, String title, String genre) {
-        this.id = id;
-        this.title = title;
-        this.genre = genre;
-    }
-
-    // getters e setters
+    private String img;
+    private int likeCount;
+    private String title;
 }

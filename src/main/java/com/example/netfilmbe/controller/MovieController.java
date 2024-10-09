@@ -1,6 +1,8 @@
 package com.example.netfilmbe.controller;
+
+import com.example.netfilmbe.dto.MovieDTO;
 import com.example.netfilmbe.entity.Movie;
-import com.example.netfilmbe.repository.MovieRepository;
+import com.example.netfilmbe.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,41 +14,30 @@ import java.util.List;
 public class MovieController {
 
     @Autowired
-    private MovieRepository movieRepository;
+    private MovieService movieService;
 
-    // Ottieni tutti i film
+    // Ottieni tutti i film (restituendo il DTO)
     @GetMapping("/getAllMovies")
-    public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
+    public List<MovieDTO> getAllMovies() {
+
+        return movieService.getAllMovies();
     }
 
     // Aggiungi un nuovo film
     @PostMapping("/createMovie")
     public Movie createMovie(@RequestBody Movie movie) {
-        return movieRepository.save(movie);
+        return movieService.createMovie(movie);
     }
 
     // Modifica un film
     @PutMapping("/{id}")
     public Movie updateMovie(@PathVariable Long id, @RequestBody Movie movieDetails) {
-        Movie movie = movieRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Film non trovato con id: " + id));
-
-        movie.setTitle(movieDetails.getTitle());
-        movie.setDescrizione(movieDetails.getDescrizione());
-        movie.setImg(movieDetails.getImg());
-        movie.setAnno(movieDetails.getAnno());
-        movie.setLikeCount(movieDetails.getLikeCount());
-        movie.setCommenti(movieDetails.getCommenti());
-
-        return movieRepository.save(movie);
+        return movieService.updateMovie(id, movieDetails);
     }
 
     // Elimina un film
     @DeleteMapping("/{id}")
     public void deleteMovie(@PathVariable Long id) {
-        movieRepository.deleteById(id);
+        movieService.deleteMovie(id);
     }
-
 }
-
