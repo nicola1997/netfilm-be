@@ -1,27 +1,28 @@
-# Usa un'immagine Maven per il build
-FROM maven:3.9.0-openjdk-17 AS build
+# Build stage
+FROM maven:3.8.3-openjdk-17 AS build
 
 # Imposta la directory di lavoro
 WORKDIR /app
 
-# Copia il file pom.xml e il codice sorgente
-COPY pom.xml .
-COPY src ./src
+# Copia solo il pom.xml prima di copiare il resto del codice
+COPY pom.xml /app/
+# Questo è utile per ottimizzare il caching, evitando di ricompilare se il pom.xml non cambia
+COPY src /app/src
 
-# Compila l'applicazione
+# Compila il progetto e crea il jar
 RUN mvn clean package -DskipTests
 
-# Usa un'immagine JDK per eseguire l'app
-FROM openjdk:17-jdk-alpine
+# Package stage
+FROM openjdk:17-alpine
 
 # Imposta la directory di lavoro
 WORKDIR /app
 
-# Copia il JAR dal build stage
-COPY --from=build /app/target/netfilm-be-0.0.1-SNAPSHOT.jar app.jar
+# Copia il jar generato dal build stage
+COPY --from=build /app/target/*.jar /app/app.jar
 
 # Espone la porta 8080
 EXPOSE 8080
 
-# Avvia l'applicazione
-CMD ["java", "-jar", "app.jar"]
+# Comando di avvio dell'applicazione
+ENTRYPOINT ["java", "-jar", "app.jar"]
