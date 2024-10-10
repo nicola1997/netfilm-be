@@ -1,6 +1,6 @@
 CREATE TABLE movies
 (
-    id          INT PRIMARY KEY,
+    id          INT AUTO_INCREMENT PRIMARY KEY,
     anno        INT          NOT NULL,
     descrizione TEXT         NOT NULL,
     genre       VARCHAR(100) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE movies
 
 CREATE TABLE users
 (
-    id       INT PRIMARY KEY,
+    id       INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255),
     email    VARCHAR(1000),
     password VARCHAR(255)
