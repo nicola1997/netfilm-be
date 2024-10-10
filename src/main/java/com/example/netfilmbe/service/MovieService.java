@@ -13,10 +13,7 @@ public class MovieService {
 
     private final MovieRepository movieRepository;
 
-    public MovieService(MovieRepository movieRepository) {
-
-        this.movieRepository = movieRepository;
-    }
+    public MovieService(MovieRepository movieRepository) {this.movieRepository = movieRepository;}
 
     // Trasforma una lista di Movie in MovieDTO
     public List<MovieDTO> getAllMovies() {

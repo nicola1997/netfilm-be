@@ -23,20 +23,17 @@ public class MovieController {
         return movieService.getAllMovies();
     }
 
-    // Aggiungi un nuovo film
-    @PostMapping("/createMovie")
+     @PostMapping("/createMovie")
     public Movie createMovie(@RequestBody Movie movie) {
         return movieService.createMovie(movie);
     }
 
-    // Modifica un film
-    @PutMapping("/{id}")
+     @PutMapping("/{id}")
     public Movie updateMovie(@PathVariable Long id, @RequestBody Movie movieDetails) {
         return movieService.updateMovie(id, movieDetails);
     }
 
-    // Elimina un film
-    @DeleteMapping("/{id}")
+     @DeleteMapping("/{id}")
     public void deleteMovie(@PathVariable Long id) {
         movieService.deleteMovie(id);
     }
