@@ -1,5 +1,5 @@
-# Usa un'immagine base di JDK
-FROM openjdk:17-jdk-alpine
+# Usa un'immagine Maven per il build
+FROM maven:3.9.0-openjdk-17 AS build
 
 # Imposta la directory di lavoro
 WORKDIR /app
@@ -8,18 +8,20 @@ WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 
-# Copia anche il wrapper Maven
-COPY mvnw .
-COPY .mvn .mvn
-
-# Dai i permessi di esecuzione al file mvnw
-RUN chmod +x mvnw
-
 # Compila l'applicazione
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
-# Espone la porta 8080 (o la porta che utilizza la tua app)
+# Usa un'immagine JDK per eseguire l'app
+FROM openjdk:17-jdk-alpine
+
+# Imposta la directory di lavoro
+WORKDIR /app
+
+# Copia il JAR dal build stage
+COPY --from=build /app/target/netfilm-be-0.0.1-SNAPSHOT.jar app.jar
+
+# Espone la porta 8080
 EXPOSE 8080
 
 # Avvia l'applicazione
-CMD ["java", "-jar", "target/netfilm-be-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "app.jar"]
