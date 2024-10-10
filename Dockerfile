@@ -1,27 +1,26 @@
-# Build stage
+# Fase di build
 FROM maven:3.8.3-openjdk-17 AS build
 
 # Imposta la directory di lavoro
 WORKDIR /app
 
-# Copia solo il pom.xml prima di copiare il resto del codice
-COPY pom.xml /app/
-# Questo è utile per ottimizzare il caching, evitando di ricompilare se il pom.xml non cambia
-COPY src /app/src
+# Copia il file pom.xml e il codice sorgente
+COPY pom.xml .
+COPY src ./src
 
-# Compila il progetto e crea il jar
+# Costruisce il progetto
 RUN mvn clean package -DskipTests
 
-# Package stage
+# Fase di esecuzione
 FROM openjdk:17-alpine
 
 # Imposta la directory di lavoro
 WORKDIR /app
 
-# Copia il jar generato dal build stage
-COPY --from=build /app/target/*.jar /app/app.jar
+# Copia il jar costruito dalla fase di build
+COPY --from=build /app/target/*.jar app.jar
 
-# Espone la porta 8080
+# Espone la porta su cui l'applicazione ascolterà
 EXPOSE 8080
 
 # Comando di avvio dell'applicazione
