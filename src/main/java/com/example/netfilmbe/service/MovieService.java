@@ -17,18 +17,7 @@ public class MovieService {
 
     // Trasforma una lista di Movie in MovieDTO
     public List<MovieDTO> getAllMovies() {
-        List<Movie> movies = movieRepository.findAll();
-        return movies.stream()
-                .map(movie -> new MovieDTO(
-                        movie.getId(),
-                        movie.getAnno(),
-                        movie.getDescrizione(),
-                        movie.getGenre(),
-                        movie.getImg(),
-                        movie.getLikeCount(),
-                        movie.getTitle()
-                       ))
-                .collect(Collectors.toList());
+        return movieRepository.getMovies();
     }
 
     // Crea un nuovo film
