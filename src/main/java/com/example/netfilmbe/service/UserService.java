@@ -17,7 +17,7 @@ public class UserService {
     }
 
     public void saveUser(UserDTO user) {
-        log.info("Ricevuto utente: {}", user);
+        log.info("Ricevuto utenteee:--------- {}", user);
 
         Users userEntity = new Users();
         userEntity.setUsername(user.getUsername());
