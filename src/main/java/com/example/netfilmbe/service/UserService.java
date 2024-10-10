@@ -25,4 +25,7 @@ public class UserService {
         userEntity.setPassword(user.getPassword());
         usersRepository.save(userEntity);
     }
+    public boolean isUser(UserDTO user){
+        return usersRepository.isUser(  user.getUsername(), user.getEmail(),user.getPassword());
+    }
 }
