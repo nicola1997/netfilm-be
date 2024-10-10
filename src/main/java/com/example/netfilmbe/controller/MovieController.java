@@ -5,6 +5,7 @@ import com.example.netfilmbe.dto.UserDTO;
 import com.example.netfilmbe.entity.Movie;
 import com.example.netfilmbe.service.MovieService;
 import com.example.netfilmbe.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,10 +21,11 @@ public class MovieController {
 
     @Autowired
     UserService userService;
-
     @PostMapping("/saveUser")
     public void saveUser(@RequestBody UserDTO user) {
+
         userService.saveUser(user);
+
     }
 
     @GetMapping("/getAllMovies")
